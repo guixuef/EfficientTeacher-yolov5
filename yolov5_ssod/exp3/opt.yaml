@@ -1,0 +1,350 @@
+Dataset:
+  batch_size: 8
+  data_name: doctor
+  debug: false
+  img_path: ''
+  img_size: 640
+  include_class: []
+  label_path: ''
+  names:
+  - angiodysplasia
+  - erosion
+  - stenosis
+  - lymphangiectasia
+  - lymph follicle
+  - SMT
+  - polyp-like
+  - bleeding
+  - diverticulum
+  - erythema
+  - foreign body
+  - vein
+  nc: 12
+  norm_scale: 255.0
+  np: 0
+  num_ids: 0
+  pseudo_ids: false
+  quad: false
+  rect: false
+  sampler_type: normal
+  target: data/custom_unlabeled.txt
+  test: data/custom_val.txt
+  train: data/custom_train.txt
+  val: data/custom_val.txt
+  val_kp: false
+  workers: 16
+Distill:
+  Tmodel: ''
+  boxloss: false
+  clsloss: false
+  dist: 1.0
+  dist_loss: l2
+  giou: 0.05
+  loss_type: ''
+  objloss: false
+  temp: 20
+  use_distill: false
+Loss:
+  anchor_t: 4.0
+  assigner_type: TAL
+  autobalance: false
+  box: 0.05
+  box_loss_weight: 5.0
+  cls: 0.3
+  cls_loss_weight: 1.0
+  cls_pw: 1.0
+  dfl_loss_weight: 0.25
+  embedding: 64
+  fl_gamma: 0.0
+  grid_cell_offset: 0.5
+  grid_cell_size: 5.0
+  iou_obj: false
+  iou_type: giou
+  kp_loss_weight: 10.0
+  label_smoothing: 0.0
+  obj: 0.7
+  obj_loss_weight: 1.0
+  obj_pw: 1.0
+  qfl_beta: 2.0
+  qfl_loss_weight: 1.0
+  qfl_use_sigmoid: true
+  reg_max: 7
+  single_targets: false
+  static_assigner_epoch: 5
+  top_k: 13
+  type: ComputeLoss
+  use_dfl: true
+  use_gfl: false
+Model:
+  Backbone:
+    activation: SiLU
+    arch:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 1
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    first_input_channels: 1
+    in_channels: 3
+    kernel_size: 3
+    lite_conv: false
+    model_size: 0.2x
+    name: YoloV5
+    num_repeats:
+    - 1
+    - 6
+    - 12
+    - 18
+    - 6
+    out_channels:
+    - 64
+    - 128
+    - 256
+    - 512
+    - 1024
+    out_stages:
+    - 2
+    - 3
+    - 4
+    output_layers:
+    - 6
+    - 14
+    - 18
+    pretrain: false
+    stage_repeats:
+    - 4
+    - 8
+    - 4
+    with_last_conv: false
+  Head:
+    activation: SiLU
+    conv_type: DWConv
+    feat_channels: 256
+    in_channels:
+    - 128
+    - 256
+    - 512
+    name: YoloV5
+    num_decouple: 2
+    octave_base_scale: 5
+    share_cls_reg: false
+    stacked_convs: 2
+    strides:
+    - 8
+    - 16
+    - 32
+  LinearAddModel: false
+  Neck:
+    activation: SiLU
+    end_level: -1
+    in_channels:
+    - 256
+    - 512
+    - 1024
+    interpolate: bilinear
+    name: YoloV5
+    num_outs: 3
+    num_repeats:
+    - 12
+    - 12
+    - 12
+    - 12
+    out_channels:
+    - 256
+    - 512
+    - 1024
+    start_level: 0
+  QARepVGGModel: false
+  RealVGGModel: false
+  RepOpt: false
+  RepScale_weight: ''
+  anchors:
+  - - 10
+    - 13
+    - 16
+    - 30
+    - 33
+    - 23
+  - - 30
+    - 61
+    - 62
+    - 45
+    - 59
+    - 119
+  - - 116
+    - 90
+    - 156
+    - 198
+    - 373
+    - 326
+  ch: 3
+  depth_multiple: 1.0
+  inplace: true
+  prior_prob: 0.01
+  weights: ''
+  width_multiple: 1.0
+NAS:
+  GEA:
+    cycles: 100
+    pop_size: 10
+    sample_dataIter: -1
+    sample_epochs: 20
+    sample_size: 3
+  flops_target:
+  - 0
+  - 10000000000.0
+  params_target:
+  - 0
+  - 10000000000.0
+  use_nas: false
+  width_range: []
+Prune:
+  channel_divide: 8
+  flops_target: 0.3
+  ft_reinit: false
+  iterative_prune: false
+  prune_finetune: false
+  prune_freq: 50
+  sparse_rate: 0.001
+  sr_type: ''
+  update_sr: false
+  use_sparse: false
+Qat:
+  backend: tensorrt
+  bitmode: int8
+  quant_dir: false
+  sensitive_eval_batch: 30
+  sensitive_num: -1
+  sensitive_relerror: 0.01
+  use_defaultfuse: false
+  use_qat: false
+  use_quant_sensitivity_analysis: true
+SSOD:
+  box_loss_weight: 0.05
+  cls_loss_weight: 0.3
+  conf_thres: 0.65
+  cosine_ema: true
+  da_loss_weights: 0.01
+  debug: false
+  dynamic_thres_epoch: 0
+  ema_rate: 0.999
+  epoch_adaptor: true
+  extra_teachers: []
+  extra_teachers_class_names: []
+  fixed_accumulate: false
+  focal_loss: 0.0
+  ignore_obj: false
+  ignore_thres_high: 0.6
+  ignore_thres_low: 0.1
+  imitate_teacher: false
+  iou_type: giou
+  loss_type: ComputeStudentMatchLoss
+  milestones:
+  - 10
+  - 20
+  multi_label: false
+  multi_step_lr: false
+  nms_conf_thres: 0.1
+  nms_iou_thres: 0.65
+  obj_loss_weight: 0.7
+  pseudo_label_type: FairPseudoLabel
+  pseudo_label_with_bbox: true
+  pseudo_label_with_cls: false
+  pseudo_label_with_obj: true
+  resample_high_percent: 0.25
+  resample_low_percent: 0.99
+  ssod_hyp:
+    autoaugment: 0.5
+    cutout: 0.5
+    degrees: 0.0
+    fliplr: 0.5
+    flipud: 0.0
+    hsv_h: 0.015
+    hsv_s: 0.7
+    hsv_v: 0.4
+    mosaic: 1.0
+    perspective: 0.0
+    scale: 0.8
+    shear: 0.0
+    translate: 0.1
+    with_gt: false
+  teacher_loss_weight: 1.0
+  teacher_ota_cost: false
+  train_domain: true
+  uncertain_aug: true
+  use_ota: false
+  valid_thres: 0.55
+  with_da_loss: false
+adam: false
+artifact_alias: latest
+bbox_interval: -1
+cache: false
+check_datacache: false
+debug: false
+device: ''
+do_test: false
+entity: null
+epochs: 50
+evolve: false
+exist_ok: false
+find_unused_parameters: true
+finetune: false
+freeze_layer_num: 0
+hyp:
+  burn_epochs: 10
+  copy_paste: 0.0
+  cutout: 0.0
+  degrees: 0.0
+  fliplr: 0.5
+  flipud: 0.0
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  lr0: 0.01
+  lrf: 1.0
+  mixup: 0.0
+  momentum: 0.937
+  mosaic: 1.0
+  no_aug_epochs: 0
+  perspective: 0.0
+  scale: 0.9
+  shear: 0.0
+  translate: 0.1
+  use_aug: true
+  warmup_bias_lr: 0.1
+  warmup_epochs: 3
+  warmup_momentum: 0.8
+  weight_decay: 0.0005
+linear_lr: true
+local_rank: -1
+name: exp
+ngpu: 1
+noautoanchor: true
+nosave: false
+noval: false
+project: yolov5_ssod
+prune_finetune: false
+rect: false
+reinitial: false
+resume: false
+save_dir: yolov5_ssod\exp3
+save_period: -1
+single_cls: false
+sync_bn: false
+upload_dataset: false
+val_conf_thres: 0.001
+weights: ''
+

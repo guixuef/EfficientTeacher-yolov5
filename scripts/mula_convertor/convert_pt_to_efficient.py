@@ -99,5 +99,6 @@ def convert_efficient_to_yolov5(efficient_path='',  yolov5_path='', save_path=''
         torch.save(yolov5_ckpt, save_path)
 
 if __name__ == '__main__':
-    # convert_yolov5_to_efficient( 'yolov5s.pt', 'efficientteacher/configs/sup/public/yolov5s_coco.yaml','efficient-yolov5s.pt')
-    convert_efficient_to_yolov5('efficient-yolov5m.pt', yolov5_path='yolov5m.pt', save_path='test.pt')
+    convert_yolov5_to_efficient( 'best.pt', 'E:/GXF/pycharm-workcpace/efficientteacher/configs/sup/custom/yolov5l_custom.yaml','efficient-best.pt')
+
+    #convert_efficient_to_yolov5('efficient-yolov5m.pt', yolov5_path='yolov5m.pt', save_path='test.pt')

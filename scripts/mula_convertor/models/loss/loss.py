@@ -238,7 +238,7 @@ class ComputeLoss:
         targets = targets[:,:6]
         na, nt = self.na, targets.shape[0]  # number of anchors, targets
         tcls, tbox, indices, anch = [], [], [], []
-        gain = torch.ones(7, device=targets.device)  # normalized to gridspace gain
+        gain = torch.ones(7, device=targets.device).long()  # normalized to gridspace gain
         ai = torch.arange(na, device=targets.device).float().view(na, 1).repeat(1, nt)  # same as .repeat_interleave(nt)
         targets = torch.cat((targets.repeat(na, 1, 1), ai[:, :, None]), 2)  # append anchor indices
 
@@ -430,7 +430,7 @@ class ComputeStudentLoss():
         targets = targets[:,:6]
         na, nt = self.na, targets.shape[0]  # number of anchors, targets
         tcls, tbox, indices, anch = [], [], [], []
-        gain = torch.ones(7, device=targets.device)  # normalized to gridspace gain
+        gain = torch.ones(7, device=targets.device).long()  # normalized to gridspace gain
         ai = torch.arange(na, device=targets.device).float().view(na, 1).repeat(1, nt)  # same as .repeat_interleave(nt)
         targets = torch.cat((targets.repeat(na, 1, 1), ai[:, :, None]), 2)  # append anchor indices
 
